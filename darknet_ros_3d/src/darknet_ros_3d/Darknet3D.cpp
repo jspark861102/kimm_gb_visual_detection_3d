@@ -56,7 +56,7 @@ Darknet3D::Darknet3D():
   initParams();
 
   darknet3d_pub_ = nh_.advertise<gb_visual_detection_3d_msgs::BoundingBoxes3d>(output_bbx3d_topic_, 100);
-  markers_pub_ = nh_.advertise<visualization_msgs::MarkerArray>("/darknet_ros_3d/markers", 100);
+  markers_pub_ = nh_.advertise<visualization_msgs::MarkerArray>(output_markers_topic_, 100);
 
   yolo_sub_ = nh_.subscribe(input_bbx_topic_, 1, &Darknet3D::darknetCb, this);
   pointCloud_sub_ = nh_.subscribe(pointcloud_topic_, 1, &Darknet3D::pointCloudCb, this);
@@ -69,6 +69,7 @@ Darknet3D::initParams()
 {
   input_bbx_topic_ = "/darknet_ros/bounding_boxes";
   output_bbx3d_topic_ = "/darknet_ros_3d/bounding_boxes";
+  output_markers_topic_ = "/darknet_ros_3d/markers";
   pointcloud_topic_ = "/camera/depth_registered/points";
   working_frame_ = "/camera_link";
   mininum_detection_thereshold_ = 0.5f;
@@ -76,6 +77,7 @@ Darknet3D::initParams()
 
   nh_.param("darknet_ros_topic", input_bbx_topic_, input_bbx_topic_);
   nh_.param("output_bbx3d_topic", output_bbx3d_topic_, output_bbx3d_topic_);
+  nh_.param("output_markers_topic", output_markers_topic_, output_markers_topic_);
   nh_.param("point_cloud_topic", pointcloud_topic_, pointcloud_topic_);
   nh_.param("working_frame", working_frame_, working_frame_);
   nh_.param("mininum_detection_thereshold", mininum_detection_thereshold_, mininum_detection_thereshold_);

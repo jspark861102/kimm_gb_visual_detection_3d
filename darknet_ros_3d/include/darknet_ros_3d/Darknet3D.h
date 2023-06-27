@@ -81,6 +81,7 @@ private:
 
   std::string input_bbx_topic_;
   std::string output_bbx3d_topic_;
+  std::string output_markers_topic_;
   std::string pointcloud_topic_;
   std::string working_frame_;
   std::vector<std::string> interested_classes_;
