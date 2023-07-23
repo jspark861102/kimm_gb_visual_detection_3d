@@ -1,5 +1,6 @@
 <launch>
   <arg name="isrobot"          default="false"/> 
+  <arg name="start_yolo_rviz" default="false"/>
 
   <group unless="$(arg isrobot)">        
     <!-- Config camera image topic  -->
@@ -67,7 +68,9 @@
 
     <!-- Start darknet ros 3d -->
     <node pkg="darknet_ros_3d" type="darknet3d_node" name="darknet_3d" output="screen">
-      <rosparam command="load" file="$(find darknet_ros_3d)/config/darknet_3d.yaml" />
+      <rosparam command="load" file="$(find darknet_ros_3d)/config/darknet_3d_ns0.yaml" />
     </node>
   </group>  
+
+  <node name="kimm_aruco_rviz" pkg="rviz" type="rviz" args="-d $(find darknet_ros_3d)/rviz/kimm_yolo_rviz.rviz -f camera_color_optical_frame" required="true"  if="$(arg start_yolo_rviz)"/>
 </launch>
